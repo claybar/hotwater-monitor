@@ -1,0 +1,22 @@
+# Based on examples from
+#   < http://docs.platformio.org/en/stable/ci/travis.html >
+
+language: python
+python:
+    - "2.7"
+
+sudo: false
+cache:
+    directories:
+        - "~/.platformio"
+
+env:
+    - PIO=true
+    - CPPLINT=true
+
+install:
+    - pip install -U platformio
+    - pip install cpplint
+
+script:
+    - if [[ "$PIO" ]]; then platformio run; else cpplint --recursive --filter=-whitespace/braces,-legal/copyright src; fi
